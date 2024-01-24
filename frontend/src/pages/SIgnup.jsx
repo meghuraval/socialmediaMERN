@@ -1,7 +1,9 @@
 /* eslint-disable no-unused-vars */
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-const Signin = () => {
+const Signup = () => {
+  const navigate = useNavigate();
   const submitForm = () => {
     const form = new FormData();
     for (const key in formData) {
@@ -15,9 +17,11 @@ const Signin = () => {
       .then((response) => response.json())
       .then((data) => {
         console.log("Success:", data);
+        navigate("/signin");
       })
       .catch((error) => {
         console.error("Error:", error);
+        console.log("Server response:", error.message);
       });
   };
 
@@ -93,4 +97,4 @@ const Signin = () => {
   );
 };
 
-export default Signin;
+export default Signup;

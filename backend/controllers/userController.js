@@ -39,11 +39,14 @@ const createUser = async (req, res) => {
     const { username, password, email } = req.body;
     const profilePicture = req.files.profilePicture;
 
+    // Hash the password before storing it
+    const hashedPassword = await bcrypt.hash(password, 10);
+
     const profilePictureUrl = await uploadFileToStorage(profilePicture);
 
     const newUser = new User({
       username,
-      password,
+      password: hashedPassword,
       email,
       profilePictureURL: profilePictureUrl,
     });
@@ -58,7 +61,7 @@ const createUser = async (req, res) => {
     console.error("Error creating user:", error.message);
     res.status(500).json(error.message);
   }
-  //route for this will be "http://localhost:3000/user/createUser"
+  // Route for this is "http://localhost:3000/user/signin"
 };
 
 //controller to sign user in
@@ -71,8 +74,6 @@ const signInUser = async (req, res) => {
     if (!user) {
       return res.status(404).json({ error: "User not found" });
     }
-
-    // If using Firebase authentication, you can add code to sign in with Firebase here
 
     // For local authentication (password stored in MongoDB)
     const isPasswordMatch = await bcrypt.compare(password, user.password);
@@ -90,7 +91,7 @@ const signInUser = async (req, res) => {
     console.error("Error signing in user:", error.message);
     res.status(500).json(error.message);
   }
-  // Route for this is "http://localhost:3000/user/signInUser"
+  // Route for this is "http://localhost:3000/user/signin"
 };
 
 const getUserDetails = async (req, res) => {

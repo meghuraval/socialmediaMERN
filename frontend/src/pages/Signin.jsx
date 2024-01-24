@@ -1,7 +1,9 @@
 /* eslint-disable no-unused-vars */
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Signin = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -17,7 +19,7 @@ const Signin = () => {
 
   const handleSignIn = async () => {
     try {
-      const response = await fetch("http://localhost:3000/user/signInUser", {
+      const response = await fetch("http://localhost:3000/user/signin", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -33,6 +35,7 @@ const Signin = () => {
 
       localStorage.setItem("jwtToken", data.token);
       console.log("Sign-in successful:", data);
+      navigate("/account");
     } catch (error) {
       console.error("Error signing in:", error.message);
     }
