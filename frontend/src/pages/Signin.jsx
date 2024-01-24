@@ -2,51 +2,53 @@
 import React, { useState } from "react";
 
 const Signin = () => {
-  const submitForm = () => {
-    const form = new FormData();
-    for (const key in formData) {
-      form.append(key, formData[key]);
-    }
-
-    fetch("http://localhost:3000/user/createUser", {
-      method: "POST",
-      body: form,
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("Success:", data);
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
-  };
-
   const [formData, setFormData] = useState({
-    username: "",
-    password: "",
     email: "",
-    profilePicture: null,
+    password: "",
   });
 
   const handleChange = (e) => {
-    const { name, value, files } = e.target;
+    const { name, value } = e.target;
     setFormData((prevFormData) => ({
       ...prevFormData,
-      [name]: files ? files[0] : value,
+      [name]: value,
     }));
+  };
+
+  const handleSignIn = async () => {
+    try {
+      const response = await fetch("http://localhost:3000/user/signInUser", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const data = await response.json();
+
+      localStorage.setItem("jwtToken", data.token);
+      console.log("Sign-in successful:", data);
+    } catch (error) {
+      console.error("Error signing in:", error.message);
+    }
   };
 
   return (
     <div>
-      <h2>User Form</h2>
+      <h2>Sign In</h2>
 
       <form>
-        <label htmlFor="username">Username:</label>
+        <label htmlFor="email">Email:</label>
         <input
-          type="text"
-          id="username"
-          name="username"
-          value={formData.username}
+          type="email"
+          id="email"
+          name="email"
+          value={formData.email}
           onChange={handleChange}
           required
         />
@@ -63,30 +65,8 @@ const Signin = () => {
         />
         <br />
 
-        <label htmlFor="email">Email:</label>
-        <input
-          type="email"
-          id="email"
-          name="email"
-          value={formData.email}
-          onChange={handleChange}
-          required
-        />
-        <br />
-
-        <label htmlFor="profilePicture">Profile Picture:</label>
-        <input
-          type="file"
-          id="profilePicture"
-          name="profilePicture"
-          accept="image/*"
-          onChange={handleChange}
-          required
-        />
-        <br />
-
-        <button type="button" onClick={submitForm}>
-          Submit
+        <button type="button" onClick={handleSignIn}>
+          Sign In
         </button>
       </form>
     </div>

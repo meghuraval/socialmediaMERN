@@ -1,5 +1,7 @@
 const { initializeApp } = require("firebase/app");
 const User = require("../models/userModel");
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcryptjs");
 const {
   getStorage,
   ref,
@@ -32,7 +34,6 @@ const uploadFileToStorage = async (file) => {
 };
 
 // Controller to create a user
-
 const createUser = async (req, res) => {
   try {
     const { username, password, email } = req.body;
@@ -60,4 +61,60 @@ const createUser = async (req, res) => {
   //route for this will be "http://localhost:3000/user/createUser"
 };
 
-module.exports = { createUser };
+//controller to sign user in
+const signInUser = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    // Check if the user exists
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    // If using Firebase authentication, you can add code to sign in with Firebase here
+
+    // For local authentication (password stored in MongoDB)
+    const isPasswordMatch = await bcrypt.compare(password, user.password);
+    if (!isPasswordMatch) {
+      return res.status(401).json({ error: "Invalid password" });
+    }
+
+    // Create a JSON Web Token (JWT) for authentication
+    const token = jwt.sign({ userId: user._id }, "secretkeytest", {
+      expiresIn: "1h",
+    });
+
+    res.status(200).json({ message: "Sign-in successful", token });
+  } catch (error) {
+    console.error("Error signing in user:", error.message);
+    res.status(500).json(error.message);
+  }
+  // Route for this is "http://localhost:3000/user/signInUser"
+};
+
+const getUserDetails = async (req, res) => {
+  try {
+    // Get the user ID from the decoded token attached by the middleware
+    const userId = req.decodedToken.userId;
+
+    // Fetch user details from the database
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    // Send the user details in the response
+    res.status(200).json({
+      username: user.username,
+      email: user.email,
+      profilePictureUrl: user.profilePictureURL,
+    });
+  } catch (error) {
+    console.error("Error fetching user details:", error.message);
+    res.status(500).json(error.message);
+  }
+};
+
+module.exports = { createUser, signInUser, getUserDetails };
