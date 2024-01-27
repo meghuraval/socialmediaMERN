@@ -1,35 +1,34 @@
-const { initializeApp } = require("firebase/app");
 const User = require("../models/userModel");
 const jwt = require("jsonwebtoken");
+const path = require("path");
 const bcrypt = require("bcryptjs");
-const {
-  getStorage,
-  ref,
-  uploadBytes,
-  getDownloadURL,
-} = require("firebase/storage");
-const firebaseConfig = require("../config/firebaseConfig");
+const { Storage } = require("@google-cloud/storage");
 
-// Initialize Firebase app
-const app = initializeApp(firebaseConfig);
-
-// Initialize Firebase Storage
-const storage = getStorage(app);
+const storage = new Storage({
+  keyFilename: path.join(__dirname, "../utils/mernnotesapp-key.json"),
+  projectId: "mernnotesapp",
+});
 
 // handling file uplaod
 const uploadFileToStorage = async (file) => {
   try {
-    // Check if file and originalname are defined
-    if (!file || !file.originalname) {
+    if (!file || !file.name) {
+      throw new Error("File or originalname is not defined");
     }
 
-    const storageRef = ref(storage, `profilePictures/${file.originalname}`);
-    await uploadBytes(storageRef, file.buffer);
-    const downloadUrl = await getDownloadURL(storageRef);
+    const bucketName = "notes_profile_picture_storage";
+    const bucket = storage.bucket(bucketName);
+    const blob = bucket.file(`profilePictures/${file.name}`);
+    const blobStream = blob.createWriteStream();
+
+    blobStream.end(file.data); // Use file.data instead of file.buffer
+
+    // Get the public URL of the uploaded file
+    const downloadUrl = `https://storage.googleapis.com/${bucketName}/${blob.name}`;
     return downloadUrl;
   } catch (error) {
     console.error("Error uploading file to storage:", error.message);
-    throw error; // Re-throw the error to propagate it further if needed
+    throw error;
   }
 };
 
@@ -37,12 +36,18 @@ const uploadFileToStorage = async (file) => {
 const createUser = async (req, res) => {
   try {
     const { username, password, email } = req.body;
+
+    // Check if the request contains files
+    if (!req.files || Object.keys(req.files).length === 0) {
+      return res.status(400).json({ error: "No files were uploaded." });
+    }
+
     const profilePicture = req.files.profilePicture;
 
-    // Hash the password before storing it
-    const hashedPassword = await bcrypt.hash(password, 10);
-
+    // Process the uploaded file, save to storage, etc.
     const profilePictureUrl = await uploadFileToStorage(profilePicture);
+
+    const hashedPassword = await bcrypt.hash(password, 10);
 
     const newUser = new User({
       username,
@@ -51,7 +56,6 @@ const createUser = async (req, res) => {
       profilePictureURL: profilePictureUrl,
     });
 
-    // Save the user to MongoDB
     await newUser.save();
 
     res
@@ -61,7 +65,6 @@ const createUser = async (req, res) => {
     console.error("Error creating user:", error.message);
     res.status(500).json(error.message);
   }
-  // Route for this is "http://localhost:3000/user/signin"
 };
 
 //controller to sign user in

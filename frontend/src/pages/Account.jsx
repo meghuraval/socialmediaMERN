@@ -8,15 +8,10 @@ const Account = () => {
     profilePictureUrl: "",
   });
 
-  useEffect(() => {
-    // Fetch user details when the component mounts
-    getUserDetails();
-  }, []);
-
   const getUserDetails = async () => {
     try {
       // Retrieve the token from localStorage
-      const token = localStorage.getItem("token");
+      const token = localStorage.getItem("jwtToken");
 
       // Fetch user details from the server
       const response = await fetch(
@@ -35,6 +30,9 @@ const Account = () => {
 
       const data = await response.json();
 
+      console.log("user data is: " + data);
+      console.dir(data);
+
       // Update state with user details
       setUserData({
         username: data.username,
@@ -45,6 +43,11 @@ const Account = () => {
       console.error("Error fetching user details:", error.message);
     }
   };
+
+  useEffect(() => {
+    // Fetch user details when the component mounts
+    getUserDetails();
+  }, []);
 
   return (
     <div>

@@ -1,5 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const cors = require("cors");
 require("dotenv").config();
 const userRoutes = require("./routes/userRoute");
 const noteRoutes = require("./routes/noteRoute");
@@ -10,6 +11,15 @@ app.get("/", (req, res) => {
   res.send("Hello World!");
 });
 
+const corsOptions = {
+  origin: "http://localhost:5173",
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  credentials: true,
+  optionsSuccessStatus: 204,
+  allowedHeaders: "Content-Type,Authorization",
+};
+
+app.use(cors(corsOptions));
 app.use(express.json());
 
 mongoose.connect(process.env.DBURL);

@@ -10,6 +10,12 @@ const Signup = () => {
       form.append(key, formData[key]);
     }
 
+    console.log("FormData content:");
+    for (const [key, value] of form.entries()) {
+      const displayValue = value instanceof File ? value.name : value;
+      console.log(`${key}: ${displayValue}`);
+    }
+
     fetch("http://localhost:3000/user/createUser", {
       method: "POST",
       body: form,
@@ -44,7 +50,7 @@ const Signup = () => {
     <div>
       <h2>User Form</h2>
 
-      <form>
+      <form encType="multipart/form-data">
         <label htmlFor="username">Username:</label>
         <input
           type="text"
