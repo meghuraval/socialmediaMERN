@@ -2,7 +2,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const Signin = () => {
+// eslint-disable-next-line react/prop-types
+const Signin = ({ setAuthenticated }) => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
@@ -35,7 +36,8 @@ const Signin = () => {
 
       localStorage.setItem("jwtToken", data.token);
       console.log("Sign-in successful:", data);
-      navigate("/account");
+      setAuthenticated(true);
+      navigate("/");
     } catch (error) {
       console.error("Error signing in:", error.message);
     }

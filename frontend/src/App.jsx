@@ -1,18 +1,32 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Signin from "./pages/Signin";
 import Account from "./pages/Account";
 import Homepage from "./pages/Homepage";
-import Signup from "./pages/Signup";
+import Dashboard from "./pages/Dashboard";
+import Signup from "./pages/SIgnup";
+import Signin from "./pages/SIgnin";
+import NavBar from "./components/NavBar";
+import NavBar0 from "./components/NavBar0";
+import { useState } from "react";
 
 function App() {
+  const [authenticated, setAuthenticated] = useState(false);
+
   return (
     <Router>
+      {authenticated ? <NavBar /> : <NavBar0 />}
       <Routes>
         <Route path="/" Component={Homepage} />
         <Route path="/homepage" Component={Homepage} />
-        <Route path="/signin" Component={Signin} />
+        <Route
+          path="/signin"
+          element={<Signin setAuthenticated={setAuthenticated} />}
+        />
         <Route path="/signup" Component={Signup} />
-        <Route path="/account" Component={Account} />
+        <Route
+          path="/account"
+          element={<Account setAuthenticated={setAuthenticated} />}
+        />
+        <Route path="/dashboard" Component={Dashboard} />
       </Routes>
     </Router>
   );

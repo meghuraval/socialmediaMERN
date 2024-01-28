@@ -1,7 +1,10 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
-const Account = () => {
+const Account = ({ setAuthenticated }) => {
+  const navigate = useNavigate();
   const [userData, setUserData] = useState({
     username: "",
     email: "",
@@ -44,6 +47,16 @@ const Account = () => {
     }
   };
 
+  const handleSignOut = () => {
+    // Remove the JWT token from localStorage
+    localStorage.removeItem("jwtToken");
+
+    setAuthenticated(false);
+    // Navigate to the sign-in page or another route
+    navigate("/signin");
+    console.log("sign out succesful");
+  };
+
   useEffect(() => {
     // Fetch user details when the component mounts
     getUserDetails();
@@ -63,6 +76,7 @@ const Account = () => {
       <p>
         <strong>Email:</strong> {userData.email}
       </p>
+      <button onClick={handleSignOut}>Sign Out</button>
     </div>
   );
 };
