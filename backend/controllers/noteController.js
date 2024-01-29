@@ -98,4 +98,25 @@ const editNote = async (req, res) => {
   // Route for this is "http://localhost:3000/note/editNote/:id"
 };
 
-module.exports = { createNote, deleteNote, editNote };
+const getAllUserNotes = async (req, res) => {
+  try {
+    const userId = req.params.id; // Assuming the user ID is passed as a route parameter
+
+    // Check if the user exists
+    const userExists = await User.findById(userId);
+    if (!userExists) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    // Fetch all notes for the user
+    const userNotes = await Note.find({ user: userId });
+
+    res.status(200).json(userNotes);
+  } catch (error) {
+    console.error("Error fetching user notes:", error.message);
+    res.status(500).json({ error: "Error fetching user notes" });
+  }
+  //route for this is "http://localhost:3000/note/allNotes/:id"
+};
+
+module.exports = { createNote, deleteNote, editNote, getAllUserNotes };

@@ -4,31 +4,60 @@ import React, { useState, useEffect } from "react";
 const Dashboard = () => {
   const [notes, setNotes] = useState([]);
   const [newNote, setNewNote] = useState({ title: "", content: "" });
-  const [isFormOpen, setIsFormOpen] = useState(false); // New state to track form open/close
+  const [isFormOpen, setIsFormOpen] = useState(false);
 
-  // Function to add a new note
-  const addNewNote = async () => {
+  const fetchUserNotes = async () => {
     try {
-      // Retrieve the authentication token from local storage
       const authToken = localStorage.getItem("jwtToken");
       const userId = localStorage.getItem("userId");
 
-      // Check if the authentication token is available
       if (!authToken) {
         console.error("Authentication token not available");
         return;
       }
-      console.log("userId from localStorage:", userId);
 
-      // Create a new note object with the provided title and content
+      const response = await fetch(
+        `http://localhost:3000/note/allNotes/${userId}`,
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${authToken}`,
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const userNotes = await response.json();
+      setNotes(userNotes);
+    } catch (error) {
+      console.error("Error fetching user notes:", error.message);
+    }
+  };
+  useEffect(() => {
+    // Fetch existing notes when the component mounts
+    fetchUserNotes();
+  }, []); // Empty dependency array ensures the effect runs only once on mount
+
+  // Function to add a new note
+  const addNewNote = async () => {
+    try {
+      const authToken = localStorage.getItem("jwtToken");
+      const userId = localStorage.getItem("userId");
+
+      if (!authToken) {
+        console.error("Authentication token not available");
+        return;
+      }
+
       const noteData = {
         title: newNote.title,
         content: newNote.content,
         userId: userId,
       };
 
-      // Send a request to create a new note
-      console.log("API URL:", "http://localhost:3000/note/createNote");
       const response = await fetch("http://localhost:3000/note/createNote", {
         method: "POST",
         headers: {
@@ -42,39 +71,40 @@ const Dashboard = () => {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
 
-      // Assuming your controller returns the newly created note
       const createdNote = await response.json();
+      console.log("Created Note:", createdNote);
 
-      // Update the state with the new note
-      setNotes([...notes, createdNote]);
+      setNotes((prevNotes) => {
+        const updatedNotes = [...prevNotes, createdNote];
+        console.log("Updated Notes State:", updatedNotes);
+        return updatedNotes;
+      });
 
-      // Clear the newNote state
       setNewNote({ title: "", content: "" });
-
+      await fetchUserNotes();
       console.log("Note added successfully!");
     } catch (error) {
       console.error("Error adding new note:", error.message);
     }
   };
 
-  // Function to toggle the form
   const toggleForm = () => {
     setIsFormOpen(!isFormOpen);
   };
+
+  const renderNote = (note) => (
+    <div key={note._id}>
+      <h3>{note.title}</h3>
+      <p>{note.content}</p>
+      <hr />
+    </div>
+  );
 
   // ... (Other code for rendering notes, folders, etc.)
 
   return (
     <div>
       <p>hello, welcome to your dashboard!</p>
-
-      {/* Render existing notes */}
-      {notes.map((note) => (
-        <div key={note._id}>
-          <h3>{note.title}</h3>
-          <p>{note.content}</p>
-        </div>
-      ))}
 
       {/* Button to toggle the form */}
       <button type="button" onClick={toggleForm}>
@@ -108,6 +138,9 @@ const Dashboard = () => {
           </button>
         </form>
       )}
+
+      {/* Render existing notes */}
+      {notes.map(renderNote)}
     </div>
   );
 };
