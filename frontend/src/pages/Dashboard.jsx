@@ -5,6 +5,7 @@ const Dashboard = () => {
   const [notes, setNotes] = useState([]);
   const [newNote, setNewNote] = useState({ title: "", content: "" });
   const [isFormOpen, setIsFormOpen] = useState(false);
+  const [editNoteId, setEditNoteId] = useState(null);
 
   const fetchUserNotes = async () => {
     try {
@@ -88,14 +89,104 @@ const Dashboard = () => {
     }
   };
 
+  const deleteNote = async (noteId) => {
+    try {
+      const authToken = localStorage.getItem("jwtToken");
+
+      if (!authToken) {
+        console.error("Authentication token not available");
+        return;
+      }
+
+      const response = await fetch(
+        `http://localhost:3000/note/deleteNote/${noteId}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${authToken}`,
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      console.log("Note deleted successfully!");
+
+      // After deleting a note, fetch user notes again to update the state
+      await fetchUserNotes();
+    } catch (error) {
+      console.error("Error deleting note:", error.message);
+    }
+  };
+
+  const editNote = async () => {
+    try {
+      const authToken = localStorage.getItem("jwtToken");
+
+      if (!authToken) {
+        console.error("Authentication token not available");
+        return;
+      }
+
+      const editedNoteData = {
+        title: newNote.title,
+        content: newNote.content,
+      };
+
+      const response = await fetch(
+        `http://localhost:3000/note/editNote/${editNoteId}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${authToken}`,
+          },
+          body: JSON.stringify(editedNoteData),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      console.log("Note edited successfully!");
+      setIsFormOpen(false);
+      // After editing a note, set editNoteId to null to exit edit mode
+      setEditNoteId(null);
+      // Fetch user notes again to update the state
+      await fetchUserNotes();
+    } catch (error) {
+      console.error("Error editing note:", error.message);
+    }
+  };
+
   const toggleForm = () => {
     setIsFormOpen(!isFormOpen);
+    setEditNoteId(null); // Reset editNoteId when toggling form
+    setNewNote({ title: "", content: "" });
+  };
+
+  const startEditNote = (noteId) => {
+    // Set the note ID to be edited and populate the form fields with existing note data
+    const noteToEdit = notes.find((note) => note._id === noteId);
+    if (noteToEdit) {
+      setEditNoteId(noteId);
+      setNewNote({
+        title: noteToEdit.title,
+        content: noteToEdit.content,
+      });
+      setIsFormOpen(true);
+    }
   };
 
   const renderNote = (note) => (
     <div key={note._id}>
       <h3>{note.title}</h3>
       <p>{note.content}</p>
+      <button onClick={() => deleteNote(note._id)}>Delete</button>
+      <button onClick={() => startEditNote(note._id)}>Edit</button>
       <hr />
     </div>
   );
@@ -111,7 +202,7 @@ const Dashboard = () => {
         {isFormOpen ? "Close Form" : "Add Note"}
       </button>
 
-      {/* Form to add a new note (conditionally rendered based on isFormOpen) */}
+      {/* Form to add a new note or edit an existing note */}
       {isFormOpen && (
         <form>
           <label htmlFor="newNoteTitle">Title:</label>
@@ -133,9 +224,15 @@ const Dashboard = () => {
           />
           <br />
 
-          <button type="button" onClick={addNewNote}>
-            Add Note
-          </button>
+          {editNoteId ? (
+            <button type="button" onClick={editNote}>
+              Save Changes
+            </button>
+          ) : (
+            <button type="button" onClick={addNewNote}>
+              Add Note
+            </button>
+          )}
         </form>
       )}
 
