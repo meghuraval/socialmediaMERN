@@ -1,10 +1,18 @@
 const Note = require("../models/noteModel");
+const User = require("../models/userModel");
 
 // Controller to create a note
 const createNote = async (req, res) => {
   try {
     const { title, content } = req.body;
-    const userId = req.user._id; // Assuming user information is available in the request, possibly added by middleware
+
+    // Check if user information is available
+    if (!req.user || !req.user._id) {
+      console.error("User information is missing:", req.user);
+      return res.status(401).json({ error: "User not authenticated" });
+    }
+
+    const userId = req.user._id;
 
     // Check if the user exists
     const userExists = await User.exists({ _id: userId });

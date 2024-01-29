@@ -21,7 +21,6 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 app.use(express.json());
-
 mongoose.connect(process.env.DBURL);
 
 app.use("/user", userRoutes);

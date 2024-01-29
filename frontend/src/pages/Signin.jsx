@@ -35,6 +35,9 @@ const Signin = ({ setAuthenticated }) => {
       const data = await response.json();
 
       localStorage.setItem("jwtToken", data.token);
+      localStorage.setItem("userId", data.userId);
+
+      console.log("User ID", data.userId);
       console.log("Sign-in successful:", data);
       setAuthenticated(true);
       navigate("/");

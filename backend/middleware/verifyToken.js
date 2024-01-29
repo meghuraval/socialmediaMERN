@@ -14,7 +14,7 @@ const verifyToken = (req, res, next) => {
 
     // Attach the decoded token to the request for future use
     req.decodedToken = decodedToken;
-    req.user = decodedToken.userId;
+    req.user = { _id: decodedToken.userId };
 
     next(); // Token is valid, proceed to the next middleware or route handler
   } catch (error) {

@@ -1,5 +1,7 @@
 const express = require("express");
 const router = express.Router();
+const verifyToken = require("../middleware/verifyToken");
+
 const {
   createNote,
   deleteNote,
@@ -7,7 +9,7 @@ const {
 } = require("../controllers/noteController");
 
 // Route for creating a note
-router.post("/createNote", createNote);
+router.post("/createNote", verifyToken, createNote);
 router.delete("/deleteNote/:id", deleteNote);
 router.post("editNote/:id", editNote);
 

@@ -84,17 +84,20 @@ const signInUser = async (req, res) => {
       return res.status(401).json({ error: "Invalid password" });
     }
 
+    // Check if user._id is defined before converting to string
+    const userId = user._id ? user._id.toString() : null;
+
     // Create a JSON Web Token (JWT) for authentication
-    const token = jwt.sign({ userId: user._id }, "secretkeytest", {
+    const token = jwt.sign({ userId }, "secretkeytest", {
       expiresIn: "1h",
     });
 
-    res.status(200).json({ message: "Sign-in successful", token });
+    // Send the userId along with the token in the response
+    res.status(200).json({ message: "Sign-in successful", token, userId });
   } catch (error) {
     console.error("Error signing in user:", error.message);
     res.status(500).json(error.message);
   }
-  // Route for this is "http://localhost:3000/user/signin"
 };
 
 const getUserDetails = async (req, res) => {

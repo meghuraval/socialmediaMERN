@@ -50,7 +50,7 @@ const Account = ({ setAuthenticated }) => {
   const handleSignOut = () => {
     // Remove the JWT token from localStorage
     localStorage.removeItem("jwtToken");
-
+    localStorage.removeItem("userId");
     setAuthenticated(false);
     // Navigate to the sign-in page or another route
     navigate("/signin");
