@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { signInWithGooglePopup } from "../firebase";
 
 // eslint-disable-next-line react/prop-types
 const Signin = ({ setAuthenticated }) => {
@@ -46,9 +47,30 @@ const Signin = ({ setAuthenticated }) => {
     }
   };
 
+  const handleSignInWithGoogle = async () => {
+    try {
+      // Call the signInWithGooglePopup function
+      const userCredential = await signInWithGooglePopup();
+
+      // Access the signed-in user
+      const user = userCredential.user;
+
+      // Save user information to localStorage or perform other actions
+      localStorage.setItem("jwtToken", user.accessToken);
+      localStorage.setItem("userId", user.uid);
+
+      console.log("User ID", user.uid);
+      console.log("Google Sign-in successful:", user);
+      setAuthenticated(true);
+      navigate("/");
+    } catch (error) {
+      console.error("Error signing in with Google:", error.message);
+    }
+  };
+
   return (
     <div>
-      <h2>Sign In</h2>
+      <h2 className="">Sign In</h2>
 
       <form>
         <label htmlFor="email">Email:</label>

@@ -5,17 +5,17 @@ import { Link } from "react-router-dom";
 const NavBar = () => {
   return (
     <div>
-      <div>Notii</div>
-      <nav>
-        <ul>
-          <li>
-            <Link to="/dashboard">Dashboard</Link>
-          </li>
-          <li>
-            <Link to="/account">Account</Link>
-          </li>
-        </ul>
-      </nav>
+      <ul className="flex flex-row h-[7dvh] gap-5 px-5 text-xl items-center bg-slate-900 text-white">
+        <li className="text-yellow-300">
+          <Link to="/dashboard">Notii</Link>
+        </li>
+        <li className="ml-auto">
+          <Link to="/dashboard">Dashboard</Link>
+        </li>
+        <li>
+          <Link to="/signup">Account</Link>
+        </li>
+      </ul>
     </div>
   );
 };
