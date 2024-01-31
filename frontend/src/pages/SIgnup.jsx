@@ -48,7 +48,7 @@ const Signup = () => {
 
   return (
     <div>
-      <h2>User Form</h2>
+      <h1>User Form</h1>
 
       <form encType="multipart/form-data">
         <label htmlFor="username">Username:</label>
