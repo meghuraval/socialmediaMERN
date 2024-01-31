@@ -3,15 +3,15 @@ import React from "react";
 
 export default function Homepage() {
   return (
-    <div>
+    <div className="overflow-hidden">
       <div className="relative">
-        <header className="text-5xl md:text-7xl lg:text-8xl pt-5">
+        <header className="text-8xl md:text-9xl lg:text-10xl pt-5">
           <h1>
             Welcome to <br />
             <p className="font-semibold text-gray-600">Notii.</p>
           </h1>
-          <div className="absolute inset-0 bg-gradient-to-r from-slate-200 to-gray-500 rounded-full blur-3xl opacity-40 h-[35vh] w-[35dvh] top-[2dvh] left-10 z-[-10]"></div>
-          <div className="absolute inset-0 bg-gradient-to-r from-slate-200 to-gray-500 rounded-full blur-3xl opacity-40 h-[50vh] w-[35dvh] top-[60dvh] left-[470px] z-[-10]"></div>
+          <div className="absolute inset-0 bg-gradient-to-r from-slate-200 to-gray-500 rounded-full blur-3xl opacity-40 h-[40vh] w-[40dvh] top-[2dvh] z-[-10] left-[300px] md:left-[500px] lg:left-[800px]"></div>
+          <div className="absolute inset-0 bg-gradient-to-r from-slate-200 to-gray-500 rounded-full blur-3xl opacity-40 h-[40vh] w-[40dvh] top-[140dvh] md:top-[95dvh] lg:top-[100dvh] left-[300px] md:left-[630px] lg:left-[800px] z-[-10]"></div>
         </header>
       </div>
       <div className="text-3xl py-10 md:grid md:grid-cols-2 object-center justify-center pl-3 pr-3 gap-3 flex flex-col md:text-4xl lg:text-5xl">
@@ -32,21 +32,21 @@ export default function Homepage() {
       </div>
       <section className="">
         <h2 className="text-2xl text-center py-3 font-semibold">Features</h2>
-        <ul className="flex flex-col w-[90dvw] mx-auto md:grid md:grid-cols-3 md:h-[20dvh] text-center gap-5 text-2xl lg:text-4xl lg:py-0 md:text-3xl">
-          <li className="bg-slate-200 rounded-2xl shadow-lg shadow-gray-400 py-3 px-3 text-gray-500 hover:scale-105 transition duration-300">
+        <ul className="flex flex-col w-[90dvw] mx-auto md:grid md:grid-cols-3 md:h-[20dvh] text-center gap-5 text-2xl lg:text-4xl lg:py-0 md:text-3xl font-semibold">
+          <li className="bg-slate-200 rounded-2xl shadow-lg shadow-gray-400 py-3 text-gray-500 hover:scale-105 transition duration-300">
             Create and edit notes <br />{" "}
             <p className="text-[20px] py-3 text-yellow-800">
               Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nemo,
               esse?
             </p>
           </li>
-          <li className="bg-slate-200 rounded-2xl shadow-lg shadow-gray-400 py-3 px-3 text-gray-500 hover:scale-105 transition duration-300">
+          <li className="bg-slate-200 rounded-2xl shadow-lg shadow-gray-400 py-3 text-gray-500 hover:scale-105 transition duration-300 font-semibold">
             Organize notes with categories or tags <br />
             <p className="text-[20px] py-3 text-yellow-800">
               Lorem ipsum dolor sit amet consectetur adipisicing.
             </p>
           </li>
-          <li className="bg-slate-200 rounded-2xl shadow-lg shadow-gray-400 py-3 px-3 text-gray-500 hover:scale-105 transition duration-300">
+          <li className="bg-slate-200 rounded-2xl shadow-lg shadow-gray-400 py-3 text-gray-500 hover:scale-105 transition duration-300 font-semibold">
             Search for specific notes <br />
             <p className="text-[20px] py-3 text-yellow-800">
               Lorem ipsum dolor sit amet consectetur, adipisicing elit.
@@ -55,7 +55,7 @@ export default function Homepage() {
         </ul>
         <br />
       </section>
-      <p className="py-[4dvh] md:py-[10dvh] md:pl-6">
+      <p className="pt-[4dvh] pb-2 md:pt-[15dvh] md:pl-6">
         &copy; 2024 My Notes App
       </p>
     </div>

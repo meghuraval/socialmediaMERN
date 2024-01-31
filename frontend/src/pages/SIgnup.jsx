@@ -47,12 +47,17 @@ const Signup = () => {
   };
 
   return (
-    <div>
-      <h1>User Form</h1>
-
-      <form encType="multipart/form-data">
-        <label htmlFor="username">Username:</label>
+    <div className="flex justify-center flex-col content-center items-center">
+      <p className="text-4xl py-5 font-semibold">Sign Up</p>
+      <form
+        encType="multipart/form-data"
+        className="flex flex-col items-center pt-[5dvh] border-[2px] border-gray-400 w-[80dvw] rounded-2xl"
+      >
+        <label htmlFor="username" className="">
+          Username:
+        </label>
         <input
+          className="border border-black"
           type="text"
           id="username"
           name="username"
@@ -64,6 +69,7 @@ const Signup = () => {
 
         <label htmlFor="password">Password:</label>
         <input
+          className="border border-black"
           type="password"
           id="password"
           name="password"
@@ -75,6 +81,7 @@ const Signup = () => {
 
         <label htmlFor="email">Email:</label>
         <input
+          className="border border-black"
           type="email"
           id="email"
           name="email"
@@ -86,6 +93,7 @@ const Signup = () => {
 
         <label htmlFor="profilePicture">Profile Picture:</label>
         <input
+          className="border border-black"
           type="file"
           id="profilePicture"
           name="profilePicture"
@@ -95,8 +103,12 @@ const Signup = () => {
         />
         <br />
 
-        <button type="button" onClick={submitForm}>
-          Submit
+        <button
+          type="button"
+          className="py-3 bg-blue-300 px-5 mb-5 rounded-lg border-blue-400 border-[2px] shadow-xl hover:scale-105 duration-300"
+          onClick={submitForm}
+        >
+          Sign up
         </button>
       </form>
     </div>

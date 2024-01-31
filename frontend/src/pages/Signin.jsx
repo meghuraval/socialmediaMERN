@@ -69,12 +69,15 @@ const Signin = ({ setAuthenticated }) => {
   };
 
   return (
-    <div>
-      <h2 className="">Sign In</h2>
-
-      <form>
+    <div className="flex justify-center flex-col content-center items-center">
+      <p className="text-4xl py-5 font-semibold">Welcome Back!</p>
+      <form
+        encType="multipart/form-data"
+        className="flex flex-col items-center pt-[5dvh] border-[2px] border-gray-400 w-[80dvw] rounded-2xl"
+      >
         <label htmlFor="email">Email:</label>
         <input
+          className="border border-black"
           type="email"
           id="email"
           name="email"
@@ -83,9 +86,9 @@ const Signin = ({ setAuthenticated }) => {
           required
         />
         <br />
-
         <label htmlFor="password">Password:</label>
         <input
+          className="border border-black"
           type="password"
           id="password"
           name="password"
@@ -93,9 +96,14 @@ const Signin = ({ setAuthenticated }) => {
           onChange={handleChange}
           required
         />
+
         <br />
 
-        <button type="button" onClick={handleSignIn}>
+        <button
+          type="button"
+          className="py-3 bg-blue-300 px-5 mb-5 rounded-lg border-blue-400 border-[2px] shadow-xl hover:scale-105 duration-300"
+          onClick={handleSignIn}
+        >
           Sign In
         </button>
       </form>
