@@ -10,8 +10,8 @@ export default function Homepage() {
             Welcome to <br />
             <p className="font-semibold text-gray-600">Notii.</p>
           </h1>
-          <div className="absolute inset-0 bg-gradient-to-r from-slate-200 to-gray-500 rounded-full blur-3xl opacity-60 h-[35vh] w-[35dvh] top-[2dvh] left-10 z-[-10]"></div>
-          <div className="absolute inset-0 bg-gradient-to-r from-slate-200 to-gray-500 rounded-full blur-3xl opacity-55 h-[50vh] w-[35dvh] top-[60dvh] left-80 z-[-10]"></div>
+          <div className="absolute inset-0 bg-gradient-to-r from-slate-200 to-gray-500 rounded-full blur-3xl opacity-40 h-[35vh] w-[35dvh] top-[2dvh] left-10 z-[-10]"></div>
+          <div className="absolute inset-0 bg-gradient-to-r from-slate-200 to-gray-500 rounded-full blur-3xl opacity-40 h-[50vh] w-[35dvh] top-[60dvh] left-[470px] z-[-10]"></div>
         </header>
       </div>
       <div className="text-3xl py-10 md:grid md:grid-cols-2 object-center justify-center pl-3 pr-3 gap-3 flex flex-col md:text-4xl lg:text-5xl">
