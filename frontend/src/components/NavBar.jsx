@@ -7,7 +7,7 @@ const NavBar = () => {
     <div>
       <ul className="flex flex-row h-[7dvh] gap-5 px-5 text-xl items-center bg-slate-900 text-white">
         <li className="text-yellow-300">
-          <Link to="/dashboard">Notii</Link>
+          <Link to="/dashboard">Notii.</Link>
         </li>
         <li className="ml-auto">
           <Link to="/dashboard">Dashboard</Link>
