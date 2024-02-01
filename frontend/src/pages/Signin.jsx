@@ -107,6 +107,10 @@ const Signin = ({ setAuthenticated }) => {
           Sign In
         </button>
       </form>
+      <div>
+        <p>Dummy Email: testaccount@gmail.com</p>
+        <p>Dummy Password: testaccount</p>
+      </div>
     </div>
   );
 };
