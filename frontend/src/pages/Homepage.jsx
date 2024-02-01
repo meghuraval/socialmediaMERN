@@ -26,7 +26,7 @@ export default function Homepage() {
         </section>
         <img
           className="rounded-3xl"
-          src="https://www.freevector.com/uploads/vector/preview/31593/freevectorFinanceFinancialLiteracyIllustrationay0222revisi_generated.jpg"
+          src="../src/assets/image1.jpg"
           alt="firstimage"
         />
       </div>
