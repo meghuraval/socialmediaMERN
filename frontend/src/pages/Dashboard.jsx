@@ -18,7 +18,7 @@ const Dashboard = () => {
       }
 
       const response = await fetch(
-        `http://localhost:3000/note/allNotes/${userId}`,
+        `https://notes-mern-app-aoww.onrender.com/note/allNotes/${userId}`,
         {
           method: "GET",
           headers: {
@@ -59,14 +59,17 @@ const Dashboard = () => {
         userId: userId,
       };
 
-      const response = await fetch("http://localhost:3000/note/createNote", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${authToken}`,
-        },
-        body: JSON.stringify(noteData),
-      });
+      const response = await fetch(
+        "https://notes-mern-app-aoww.onrender.com/note/createNote",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${authToken}`,
+          },
+          body: JSON.stringify(noteData),
+        }
+      );
 
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
@@ -99,7 +102,7 @@ const Dashboard = () => {
       }
 
       const response = await fetch(
-        `http://localhost:3000/note/deleteNote/${noteId}`,
+        `https://notes-mern-app-aoww.onrender.com/note/deleteNote/${noteId}`,
         {
           method: "DELETE",
           headers: {
@@ -136,7 +139,7 @@ const Dashboard = () => {
       };
 
       const response = await fetch(
-        `http://localhost:3000/note/editNote/${editNoteId}`,
+        `https://notes-mern-app-aoww.onrender.com/note/editNote/${editNoteId}`,
         {
           method: "PUT",
           headers: {

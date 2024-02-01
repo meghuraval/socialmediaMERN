@@ -16,7 +16,7 @@ const Signup = () => {
       console.log(`${key}: ${displayValue}`);
     }
 
-    fetch("http://localhost:3000/user/createUser", {
+    fetch("https://notes-mern-app-aoww.onrender.com/user/createUser", {
       method: "POST",
       body: form,
     })

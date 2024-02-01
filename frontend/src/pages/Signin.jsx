@@ -21,13 +21,16 @@ const Signin = ({ setAuthenticated }) => {
 
   const handleSignIn = async () => {
     try {
-      const response = await fetch("http://localhost:3000/user/signin", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
+      const response = await fetch(
+        "https://notes-mern-app-aoww.onrender.com/user/signin",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        }
+      );
 
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);

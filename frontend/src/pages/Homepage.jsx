@@ -25,8 +25,8 @@ export default function Homepage() {
           <p className="py-3">Get started by creating your first note!</p>
         </section>
         <img
-          className="rounded-3xl"
-          src="../src/assets/image1.jpg"
+          className="rounded-3xl image"
+          src="../public/image1.jpg"
           alt="firstimage"
         />
       </div>

@@ -36,7 +36,7 @@ const Account = ({ setAuthenticated }) => {
       } else {
         // Fetch user details from the server for non-Google sign-in
         const response = await fetch(
-          "http://localhost:3000/user/getUserDetails",
+          "https://notes-mern-app-aoww.onrender.com/user/getUserDetails",
           {
             method: "GET",
             headers: {
