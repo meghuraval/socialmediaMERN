@@ -35,20 +35,20 @@ export default function Homepage() {
         <ul className="flex flex-col w-[90dvw] mx-auto md:grid md:grid-cols-3 md:h-[20dvh] text-center gap-5 text-2xl lg:text-4xl lg:py-0 md:text-3xl font-semibold">
           <li className="bg-slate-200 rounded-2xl shadow-lg shadow-gray-400 py-3 text-gray-500 hover:scale-105 transition duration-300">
             Create and edit notes <br />{" "}
-            <p className="text-[20px] py-3 text-yellow-800">
+            <p className="text-[20px] py-3 text-yellow-800 font-light">
               Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nemo,
               esse?
             </p>
           </li>
           <li className="bg-slate-200 rounded-2xl shadow-lg shadow-gray-400 py-3 text-gray-500 hover:scale-105 transition duration-300 font-semibold">
             Organize notes with categories or tags <br />
-            <p className="text-[20px] py-3 text-yellow-800">
+            <p className="text-[20px] py-3 text-yellow-800 font-light">
               Lorem ipsum dolor sit amet consectetur adipisicing.
             </p>
           </li>
           <li className="bg-slate-200 rounded-2xl shadow-lg shadow-gray-400 py-3 text-gray-500 hover:scale-105 transition duration-300 font-semibold">
             Search for specific notes <br />
-            <p className="text-[20px] py-3 text-yellow-800">
+            <p className="text-[20px] py-3 text-yellow-800 font-light">
               Lorem ipsum dolor sit amet consectetur, adipisicing elit.
             </p>
           </li>

@@ -41,7 +41,7 @@ const Signin = ({ setAuthenticated }) => {
       console.log("User ID", data.userId);
       console.log("Sign-in successful:", data);
       setAuthenticated(true);
-      navigate("/");
+      navigate("/dashboard");
     } catch (error) {
       console.error("Error signing in:", error.message);
     }

@@ -85,20 +85,35 @@ const Account = ({ setAuthenticated }) => {
   }, []);
 
   return (
-    <div>
-      <h2>Account Details</h2>
+    <div className="">
+      <h2 className="text-3xl text-center pb-5">Account Details</h2>
 
-      {userData.profilePictureUrl && (
-        <img src={userData.profilePictureUrl} alt="Profile" />
-      )}
+      <div className="flex flex-col items-center">
+        {userData.profilePictureUrl && (
+          <img
+            className="block w-[20dvh] rounded-full h-[20dvh] mb-10 border-blue-400 border-[5px]"
+            src={userData.profilePictureUrl}
+            alt="Profile"
+          />
+        )}
 
-      <p>
-        <strong>Username:</strong> {userData.username}
-      </p>
-      <p>
-        <strong>Email:</strong> {userData.email}
-      </p>
-      <button onClick={handleSignOut}>Sign Out</button>
+        <div className="">
+          <p className="py-3 border-b-2 border-gray-400">
+            <strong className="text-2xl">Username:</strong> {userData.username}
+          </p>
+          <p className="py-3 border-b-2 border-gray-400">
+            <strong className="text-2xl">Email:</strong> {userData.email}
+          </p>
+          <div className="flex justify-center">
+            <button
+              className="py-3 mt-8 bg-blue-300 px-3 mb-5 rounded-lg border-blue-400 border-[2px] shadow-xl hover:scale-105 duration-300 hover:cursor-pointer"
+              onClick={handleSignOut}
+            >
+              Sign Out
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
