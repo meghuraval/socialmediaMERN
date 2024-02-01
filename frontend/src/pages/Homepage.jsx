@@ -24,7 +24,11 @@ export default function Homepage() {
           </p>
           <p className="py-3">Get started by creating your first note!</p>
         </section>
-        <img className="rounded-3xl image" src="/image1.jpg" alt="firstimage" />
+        <img
+          className="rounded-3xl image"
+          src="..public/image1.jpg"
+          alt="firstimage"
+        />
       </div>
       <section className="">
         <h2 className="text-2xl text-center py-3 font-semibold">Features</h2>
