@@ -182,31 +182,50 @@ const Dashboard = () => {
   };
 
   const renderNote = (note) => (
-    <div key={note._id}>
-      <h3>{note.title}</h3>
-      <p>{note.content}</p>
-      <button onClick={() => deleteNote(note._id)}>Delete</button>
-      <button onClick={() => startEditNote(note._id)}>Edit</button>
-      <hr />
+    <div className="flex flex-col md:grid" key={note._id}>
+      <div className="bg-slate-200 w-[80%] h-[100%] mb-4 rounded-lg mx-auto relative flex flex-col overflow-hidden pb-5">
+        <h3 className="py-2 px-2">Title: {note.title}</h3>
+        <p className="py-2 px-2">Description: {note.content}</p>
+        <div className="flex absolute bottom-0 gap-[5px] bg-slate-300 w-[100%]">
+          <button
+            className="py-1 px-3 bg-red-400 rounded-lg"
+            onClick={() => deleteNote(note._id)}
+          >
+            Delete
+          </button>
+          <button
+            className="py-1 px-3 bg-blue-400 rounded-lg"
+            onClick={() => startEditNote(note._id)}
+          >
+            Edit
+          </button>
+        </div>
+        <hr />
+      </div>
     </div>
   );
 
   // ... (Other code for rendering notes, folders, etc.)
 
   return (
-    <div>
-      <p>hello, welcome to your dashboard!</p>
+    <div className="">
+      <p className="text-4xl py-5 bg-slate-200">Welcome to your dashboard!</p>
 
       {/* Button to toggle the form */}
-      <button type="button" onClick={toggleForm}>
-        {isFormOpen ? "Close Form" : "Add Note"}
+      <button
+        className="py-5 pb-10 text-3xl underline text-blue-400 flex mx-auto"
+        type="button"
+        onClick={toggleForm}
+      >
+        {isFormOpen ? "Close Form" : "Add New Note"}
       </button>
 
       {/* Form to add a new note or edit an existing note */}
       {isFormOpen && (
-        <form>
+        <form className="flex flex-col text-center border border-gray-300 rounded-lg bg-slate-100 mb-10">
           <label htmlFor="newNoteTitle">Title:</label>
           <input
+            className="w-[20dvh] h-[5dvh mx-auto border-[2px] outline-none"
             type="text"
             id="newNoteTitle"
             value={newNote.title}
@@ -216,6 +235,7 @@ const Dashboard = () => {
 
           <label htmlFor="newNoteContent">Content:</label>
           <textarea
+            className="flex h-[50dvh] w-[70dvh] border-[2px] mx-auto outline-none pl-3 pt-3"
             id="newNoteContent"
             value={newNote.content}
             onChange={(e) =>
@@ -229,7 +249,11 @@ const Dashboard = () => {
               Save Changes
             </button>
           ) : (
-            <button type="button" onClick={addNewNote}>
+            <button
+              className="py-1 px-3 bg-blue-400 rounded-lg mb-5 w-[20dvh] h-[5dvh] mx-auto"
+              type="button"
+              onClick={addNewNote}
+            >
               Add Note
             </button>
           )}
