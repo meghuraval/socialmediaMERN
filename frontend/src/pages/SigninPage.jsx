@@ -111,8 +111,8 @@ const SigninPage = ({ setAuthenticated }) => {
         </button>
       </form>
       <div>
-        <p>Dummy Email: testaccount@gmail.com</p>
-        <p>Dummy Password: testaccount</p>
+        <p>Trial Email: trial@gmail.com</p>
+        <p>Trial Password: trial</p>
       </div>
     </div>
   );
