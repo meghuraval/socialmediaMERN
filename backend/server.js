@@ -12,7 +12,7 @@ app.get("/", (req, res) => {
 });
 
 const corsOptions = {
-  origin: "http://localhost:5173",
+  origin: "https://merry-semolina-8c711f.netlify.app",
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   credentials: true,
   optionsSuccessStatus: 204,
