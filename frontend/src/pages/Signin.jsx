@@ -111,8 +111,8 @@ const Signin = ({ setAuthenticated }) => {
         </button>
       </form>
       <div>
-        <p>Dummy Email: trial@gmail.com</p>
-        <p>Dummy Password: trial</p>
+        <p>Trial Email: trial@gmail.com</p>
+        <p>Trial Password: trial</p>
       </div>
     </div>
   );
